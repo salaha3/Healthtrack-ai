@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>HealthTrack AI - Dashboard</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">HealthTrack AI</div>
+    <div class="nav-links">
+      <a href="/">Dashboard</a>
+      <a href="/profile">Profile</a>
+      <a href="/log">Daily Activity</a>
+      <a href="/meals">Meal Log</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <header class="page-header">
+      <h1>Health Dashboard</h1>
+      <p>Track your goals, meals, activity, and progress in one place.</p>
+    </header>
+
+    <% if (user) { %>
+        <section class="goal-box">
+          <h3>Current Goal</h3>
+          <p><strong>Name:</strong> <%= user.name %></p>
+          <p><strong>Goal:</strong> <%= user.goal %></p>
+          <p><strong>Target Calories:</strong> <%= user.target_calories %> kcal</p>
+          <p><strong>Protein Target:</strong> <%= user.target_protein %> g</p>
+          <p><strong>Carb Target:</strong> <%= user.target_carbs %> g</p>
+          <p><strong>Fat Target:</strong> <%= user.target_fats %> g</p>
+          <p><strong>Step Goal:</strong> <%= user.step_goal %> steps</p>
+        </section>
+      <% } %>
+
+    <section class="card-container">
+      <div class="card">
+        <h3>Average Steps</h3>
+        <p id="avgSteps"></p>
+      </div>
+      <div class="card">
+        <h3>Average Sleep</h3>
+        <p id="avgSleep"></p>
+      </div>
+      <div class="card">
+        <h3>Average Calories</h3>
+        <p id="avgCalories"></p>
+      </div>
+      <div class="card">
+        <h3>Calories vs Target</h3>
+        <p id="calorieDifference"></p>
+      </div>
+      <div class="card">
+        <h3>Average Protein</h3>
+        <p id="avgProtein"></p>
+      </div>
+      <div class="card">
+        <h3>Protein vs Target</h3>
+        <p id="proteinDifference"></p>
+      </div>
+      <div class="card">
+        <h3>Steps vs Target</h3>
+        <p id="stepsDifference"></p>
+      </div>
+    </section>
+
+    <section class="charts-grid">
+      <div class="chart-box">
+        <h3>Steps Trend</h3>
+        <canvas id="stepsChart"></canvas>
+      </div>
+
+      <div class="chart-box">
+        <h3>Sleep Trend</h3>
+        <canvas id="sleepChart"></canvas>
+      </div>
+
+      <div class="chart-box">
+        <h3>Calories Trend</h3>
+        <canvas id="caloriesChart"></canvas>
+      </div>
+
+      <div class="chart-box">
+        <h3>Weight Trend</h3>
+        <canvas id="weightChart"></canvas>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const activityData = <%- JSON.stringify(activityData) %>;
+    const mealData = <%- JSON.stringify(mealData) %>;
+    const userData = <%- JSON.stringify(user || null) %>;
+  </script>
+  <script src="/charts.js"></script>
+</body>
+</html>

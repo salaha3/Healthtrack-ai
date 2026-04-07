@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>HealthTrack AI - Profile</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">HealthTrack AI</div>
+    <div class="nav-links">
+      <a href="/">Dashboard</a>
+      <a href="/profile">Profile</a>
+      <a href="/log">Daily Activity</a>
+      <a href="/meals">Meal Log</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <header class="page-header">
+      <h1>Profile & Goal Calculator</h1>
+      <p>Enter your details to calculate calorie, macro, and step targets.</p>
+    </header>
+
+    <form action="/profile" method="POST" class="form-box">
+      <label>Name</label>
+      <input type="text" name="name" required>
+
+      <label>Age</label>
+      <input type="number" name="age" required>
+
+      <label>Sex</label>
+      <select name="sex" required>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+      </select>
+
+      <label>Height (cm)</label>
+      <input type="number" name="height_cm" required>
+
+      <label>Weight (kg)</label>
+      <input type="number" step="0.1" name="weight_kg" required>
+
+      <label>Activity Level</label>
+      <select name="activity_level" required>
+        <option value="sedentary">Sedentary</option>
+        <option value="light">Lightly Active</option>
+        <option value="moderate">Moderately Active</option>
+        <option value="active">Very Active</option>
+      </select>
+
+      <label>Goal</label>
+      <select name="goal" required>
+        <option value="Lose">Lose Weight</option>
+        <option value="Maintain">Maintain Weight</option>
+        <option value="Gain">Gain Weight</option>
+      </select>
+
+      <label>Daily Step Goal</label>
+      <input type="number" name="step_goal" value="8000" required>
+
+      <button type="submit">Calculate Targets</button>
+    </form>
+
+    <% if (result) { %>
+      <div class="result-box">
+        <h3><%= result.name %>'s Targets</h3>
+        <p><strong>Target Calories:</strong> <%= result.targetCalories %> kcal</p>
+        <p><strong>Protein:</strong> <%= result.protein %> g</p>
+        <p><strong>Carbs:</strong> <%= result.carbs %> g</p>
+        <p><strong>Fats:</strong> <%= result.fats %> g</p>
+        <p><strong>Step Goal:</strong> <%= result.stepGoal %> steps</p>
+      </div>
+    <% } %>
+  </main>
+</body>
+</html>
