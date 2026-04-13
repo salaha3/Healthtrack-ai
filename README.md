@@ -24,3 +24,25 @@ How to Run the Project
 ```bash
 git clone https://github.com/salaha3/healthtrack-ai.git
 cd healthtrack-ai
+```
+
+2. Install dependencies
+
+```bash
+npm install
+```
+
+3. Start MySQL using Docker
+
+```bash
+docker compose up -d
+```
+
+4. Run the application
+
+```bash
+node index.js
+```
+
+5. Open in browser
+http://localhost:3000
