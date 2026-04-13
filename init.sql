@@ -28,5 +28,29 @@ CREATE TABLE IF NOT EXISTS users (
     target_calories INT,
     target_protein INT,
     target_carbs INT,
-    target_fats INT
+    target_fats INT,
+    step_goal INT NOT NULL DEFAULT 8000
 );
+
+CREATE TABLE IF NOT EXISTS daily_logs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    log_date DATE NOT NULL,
+    steps INT NOT NULL,
+    sleep_hours DECIMAL(4,2) NOT NULL,
+    weight_kg DECIMAL(5,2) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE IF NOT EXISTS meals (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    meal_date DATE NOT NULL,
+    meal_type VARCHAR(50) NOT NULL,
+    meal_name VARCHAR(100) NOT NULL,
+    calories INT NOT NULL,
+    protein INT NOT NULL,
+    carbs INT NOT NULL,
+    fats INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);T 
