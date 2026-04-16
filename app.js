@@ -215,7 +215,7 @@ app.post('/meals', (req, res) => {
 });
 
 app.get('/recommended', (req, res) => {
-  res.send('Recommended page');
+  res.render('recommended');
 });
 
 app.listen(PORT, () => {
