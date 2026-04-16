@@ -214,6 +214,10 @@ app.post('/meals', (req, res) => {
   });
 });
 
+app.get('/recommended', (req, res) => {
+  res.send('Recommended page');
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
