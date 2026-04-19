@@ -49,6 +49,24 @@
     : 0;
 %>
 
+<% 
+  const dailyMealTotals = {};
+  if (mealData) {
+    mealData.forEach(meal => {
+      const date = new Date(meal.meal_date).toISOString().split('T')[0];
+      if (!dailyMealTotals[date]) {
+        dailyMealTotals[date] = 0;
+      }
+      dailyMealTotals[date] += meal.calories;
+    });
+  }
+
+  const calorieDays = Object.keys(dailyMealTotals).length;
+  const avgCalories = calorieDays
+    ? Math.round(Object.values(dailyMealTotals).reduce((sum, value) => sum + value, 0) / calorieDays)
+    : 0;
+%>
+
 <section class="goal-box">
   <h3>Step Recommendation</h3>
 
@@ -65,6 +83,26 @@
       <p>You need <%= stepDifference %> more steps. A walk after work or after dinner could help you reach your goal.</p>
     <% } else { %>
       <p>You are <%= stepDifference %> steps below your goal. Try adding some treadmill or cardio machine time at the gym.</p>
+    <% } %>
+  <% } %>
+</section>
+
+<section class="goal-box">
+  <h3>Calorie Recommendation</h3>
+
+  <p><strong>Your Average Calories:</strong> <%= avgCalories %> kcal</p>
+
+  <% if (user) { %>
+    <% const calorieDifference = avgCalories - user.target_calories; %>
+    
+    <% if (calorieDifference <= 0) { %>
+      <p>Well done, your calorie intake is within your target range.</p>
+    <% } else if (calorieDifference <= 200) { %>
+      <p>You are only <%= calorieDifference %> kcal above your target. A small adjustment like reducing snacks could help.</p>
+    <% } else if (calorieDifference <= 500) { %>
+      <p>You are <%= calorieDifference %> kcal above your target. Try choosing lighter meals or reducing portion sizes.</p>
+    <% } else { %>
+      <p>You are <%= calorieDifference %> kcal above your target. Consider planning your meals ahead or avoiding high-calorie foods.</p>
     <% } %>
   <% } %>
 </section>
