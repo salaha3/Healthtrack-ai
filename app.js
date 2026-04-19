@@ -229,13 +229,22 @@ app.get('/recommended', (req, res) => {
         return res.send('Error loading activity data.');
       }
 
-      res.render('recommended', {
-        user: latestUser,
-        activityData: activityResults
+      db.query('SELECT * FROM meals ORDER BY meal_date ASC', (err, mealResults) => {
+        if (err) {
+          console.error(err);
+          return res.send('Error loading meal data.');
+        }
+
+        res.render('recommended', {
+          user: latestUser,
+          activityData: activityResults,
+          mealData: mealResults
+        });
       });
     });
   });
 });
+
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
