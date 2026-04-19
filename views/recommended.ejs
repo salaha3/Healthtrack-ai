@@ -67,6 +67,12 @@
     : 0;
 %>
 
+<% 
+  const avgSleep = activityData && activityData.length
+    ? (activityData.reduce((sum, item) => sum + parseFloat(item.sleep_hours), 0) / activityData.length).toFixed(1)
+    : 0;
+%>
+
 <section class="goal-box">
   <h3>Step Recommendation</h3>
 
@@ -94,7 +100,7 @@
 
   <% if (user) { %>
     <% const calorieDifference = avgCalories - user.target_calories; %>
-    
+
     <% if (calorieDifference <= 0) { %>
       <p>Well done, your calorie intake is within your target range.</p>
     <% } else if (calorieDifference <= 200) { %>
@@ -104,5 +110,17 @@
     <% } else { %>
       <p>You are <%= calorieDifference %> kcal above your target. Consider planning your meals ahead or avoiding high-calorie foods.</p>
     <% } %>
+  <% } %>
+</section>
+
+<section class="goal-box">
+  <h3>Sleep Recommendation</h3>
+
+  <p><strong>Your Average Sleep:</strong> <%= avgSleep %> hours</p>
+
+  <% if (avgSleep >= 8) { %>
+    <p>Well done, your sleep is close to the recommended amount.</p>
+  <% } else { %>
+    <p>You are getting less than the recommended 8 hours of sleep. Try going to bed a little earlier tonight.</p>
   <% } %>
 </section>
