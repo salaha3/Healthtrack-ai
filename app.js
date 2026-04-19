@@ -215,7 +215,26 @@ app.post('/meals', (req, res) => {
 });
 
 app.get('/recommended', (req, res) => {
-  res.render('recommended');
+  db.query('SELECT * FROM users ORDER BY id DESC LIMIT 1', (err, userResults) => {
+    if (err) {
+      console.error(err);
+      return res.send('Error loading recommended page.');
+    }
+
+    const latestUser = userResults.length > 0 ? userResults[0] : null;
+
+    db.query('SELECT * FROM daily_logs ORDER BY log_date ASC', (err, activityResults) => {
+      if (err) {
+        console.error(err);
+        return res.send('Error loading activity data.');
+      }
+
+      res.render('recommended', {
+        user: latestUser,
+        activityData: activityResults
+      });
+    });
+  });
 });
 
 app.listen(PORT, () => {
