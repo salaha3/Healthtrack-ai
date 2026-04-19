@@ -42,3 +42,29 @@
   </div>
 </section>
 </main>
+
+<% 
+  const avgSteps = activityData && activityData.length
+    ? Math.round(activityData.reduce((sum, item) => sum + item.steps, 0) / activityData.length)
+    : 0;
+%>
+
+<section class="goal-box">
+  <h3>Step Recommendation</h3>
+
+  <p><strong>Your Average Steps:</strong> <%= avgSteps %></p>
+
+  <% if (user) { %>
+    <% const stepDifference = user.step_goal - avgSteps; %>
+
+    <% if (stepDifference <= 0) { %>
+      <p>Well done, you are right on track with your steps.</p>
+    <% } else if (stepDifference <= 1000) { %>
+      <p>You only need <%= stepDifference %> more steps. Why not walk to the off license store or take a short walk outside?</p>
+    <% } else if (stepDifference <= 3000) { %>
+      <p>You need <%= stepDifference %> more steps. A walk after work or after dinner could help you reach your goal.</p>
+    <% } else { %>
+      <p>You are <%= stepDifference %> steps below your goal. Try adding some treadmill or cardio machine time at the gym.</p>
+    <% } %>
+  <% } %>
+</section>
