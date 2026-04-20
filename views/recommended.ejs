@@ -44,8 +44,12 @@
 </main>
 
 <% 
+  const totalSteps = activityData && activityData.length
+    ? activityData.reduce((sum, item) => sum + item.steps, 0)
+    : 0;
+
   const avgSteps = activityData && activityData.length
-    ? Math.round(activityData.reduce((sum, item) => sum + item.steps, 0) / activityData.length)
+    ? Math.round(totalSteps / activityData.length)
     : 0;
 %>
 
@@ -77,6 +81,10 @@
   <h3>Step Recommendation</h3>
 
   <p><strong>Your Average Steps:</strong> <%= avgSteps %></p>
+
+  <p style="font-size: 0.9em; color: gray;">
+    (<%= totalSteps %> ÷ <%= activityData.length %> days)
+  </p>
 
   <% if (user) { %>
     <% const stepDifference = user.step_goal - avgSteps; %>
