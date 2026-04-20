@@ -77,8 +77,12 @@
 %>
 
 <% 
-  const avgSleep = activityData && activityData.length
+  const totalSleep = activityData && activityData.length
     ? (activityData.reduce((sum, item) => sum + parseFloat(item.sleep_hours), 0) / activityData.length).toFixed(1)
+    : 0;
+
+  const avgSleep = activityData && activityData.length
+    ? (totalSleep / activityData.length).toFixed(1)
     : 0;
 %>
 
@@ -134,6 +138,10 @@
   <h3>Sleep Recommendation</h3>
 
   <p><strong>Your Average Sleep:</strong> <%= avgSleep %> hours</p>
+
+  <p style="font-size: 0.9em; color: gray;">
+    (<%= Number(totalSleep).toFixed(1) %> ÷ <%= activityData.length %> days)
+  </p>
 
   <% if (avgSleep >= 8) { %>
     <p>Well done, your sleep is close to the recommended amount.</p>
