@@ -66,8 +66,13 @@
   }
 
   const calorieDays = Object.keys(dailyMealTotals).length;
+
+  const totalCalories = calorieDays
+    ? Object.values(dailyMealTotals).reduce((sum, value) => sum + value, 0)
+    : 0;
+
   const avgCalories = calorieDays
-    ? Math.round(Object.values(dailyMealTotals).reduce((sum, value) => sum + value, 0) / calorieDays)
+    ? Math.round(totalCalories / calorieDays)
     : 0;
 %>
 
@@ -105,6 +110,10 @@
   <h3>Calorie Recommendation</h3>
 
   <p><strong>Your Average Calories:</strong> <%= avgCalories %> kcal</p>
+
+  <p style="font-size: 0.9em; color: gray;">
+    (<%= totalCalories %> ÷ <%= calorieDays %> days)
+  </p>
 
   <% if (user) { %>
     <% const calorieDifference = avgCalories - user.target_calories; %>
